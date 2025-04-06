@@ -316,6 +316,9 @@ menuBar.addEventListener("dedicated-window-requested", () => {
 menuBar.addEventListener("shutdown-dialog-requested", () => {
   document.getElementById("shutdown-overlay").show();
 });
+menuBar.addEventListener("target-power-dialog-requested", () => {
+  document.getElementById("target-power-overlay").show();
+});
 menuBar.addEventListener("update-dialog-requested", () => {
   document.getElementById("update-overlay").show();
   document.getElementById("update-dialog").checkVersion();
@@ -425,6 +428,7 @@ menuBar.addEventListener("alt-tab-requested", () => {
     code: "Tab",
   });
 });
+
 
 setKeystrokeHistoryStatus(settings.isKeystrokeHistoryEnabled());
 

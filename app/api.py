@@ -6,6 +6,7 @@ import execute
 import hostname
 import json_response
 import local_system
+import gpio_control
 import network
 import request_parsers.errors
 import request_parsers.hostname
@@ -58,6 +59,45 @@ def restart_post():
     """
     try:
         local_system.restart()
+        return json_response.success()
+    except local_system.Error as e:
+        return json_response.error(e), 500
+    
+@api_blueprint.route('/target_powerbutton', methods=['POST'])
+def restart_post():
+    """Simulates power button click on a gpio pin (defined in gpio_control.py).
+
+    Returns:
+        Empty response on success, error object otherwise.
+    """
+    try:
+        gpio_control.click_power_button()
+        return json_response.success()
+    except local_system.Error as e:
+        return json_response.error(e), 500
+    
+@api_blueprint.route('/target_powerbutton_hold', methods=['POST'])
+def restart_post():
+    """Simulates power button hold on a gpio pin (defined in gpio_control.py).
+
+    Returns:
+        Empty response on success, error object otherwise.
+    """
+    try:
+        gpio_control.hold_power_button()
+        return json_response.success()
+    except local_system.Error as e:
+        return json_response.error(e), 500
+    
+@api_blueprint.route('/target_reset', methods=['POST'])
+def restart_post():
+    """Simulates reset button click on a gpio pin (defined in gpio_control.py).
+
+    Returns:
+        Empty response on success, error object otherwise.
+    """
+    try:
+        gpio_control.click_reset_button()
         return json_response.success()
     except local_system.Error as e:
         return json_response.error(e), 500

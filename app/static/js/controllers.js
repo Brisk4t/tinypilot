@@ -128,6 +128,44 @@ export async function shutdown(restart) {
     });
 }
 
+export async function taget_power(force, reset) {
+  // call gpio power button functions
+  let route = "/api/target_powerbutton";
+  if (reset) {
+    route = "/api/target_reset";
+  }
+  if (force) {
+    route = "/api/target_powerbutton_hold";
+  }
+  return fetch(route, {
+    method: "POST",
+    headers: {
+      "X-CSRFToken": getCsrfToken(),
+    },
+    mode: "same-origin",
+    cache: "no-cache",
+    redirect: "error",
+  })
+    .then((httpResponse) => {
+      // A 502 usually means that nginx shutdown before it could process the
+      // response. Treat this as success.
+      if (httpResponse.status === 502) {
+        return;
+      }
+      return processJsonResponse(httpResponse);
+    })
+    .catch((error) => {
+      // Depending on timing, the server may not respond to the shutdown
+      // request because it's shutting down. If we get a NetworkError, assume
+      // the shutdown succeeded.
+      if (error.message.indexOf("NetworkError") >= 0) {
+        return;
+      }
+      throw error;
+    });
+}
+
+
 export async function update() {
   return fetch("/api/update", {
     method: "PUT",
