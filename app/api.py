@@ -64,7 +64,7 @@ def restart_post():
         return json_response.error(e), 500
     
 @api_blueprint.route('/target_powerbutton', methods=['POST'])
-def restart_post():
+def target_powerbutton_post():
     """Simulates power button click on a gpio pin (defined in gpio_control.py).
 
     Returns:
@@ -77,7 +77,7 @@ def restart_post():
         return json_response.error(e), 500
     
 @api_blueprint.route('/target_powerbutton_hold', methods=['POST'])
-def restart_post():
+def target_powerbutton_hold_post():
     """Simulates power button hold on a gpio pin (defined in gpio_control.py).
 
     Returns:
@@ -90,7 +90,7 @@ def restart_post():
         return json_response.error(e), 500
     
 @api_blueprint.route('/target_reset', methods=['POST'])
-def restart_post():
+def target_reset_post():
     """Simulates reset button click on a gpio pin (defined in gpio_control.py).
 
     Returns:
